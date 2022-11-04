@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import './App.css';
 import {IngredientType} from "../types";
-
+import './App.css';
 import meatImage from "../assets/meat.jpeg";
 import cheeseImage from '../assets/cheese.jpeg';
 import beconImage from '../assets/becon.jpeg';
 import saladeImage from '../assets/salade.jpeg';
 import Ingredient from "../components/Ingredients/Ingredient";
-import {PropsMain} from "../types";
 import Burger from "../components/Burger/Burger";
+import TotalPrice from "../components/TotalPrice/TotalPrice";
 
 const INGREDIENTS: IngredientType[] = [
   {name: 'Meat', price: 80, image: meatImage},
@@ -16,8 +15,6 @@ const INGREDIENTS: IngredientType[] = [
   {name: 'Bacon', price: 60, image: beconImage},
   {name: 'Salad', price: 10, image: saladeImage},
 ];
-
-const allIngrName: string[] = [];
 
 function App() {
   const [ingredient, setIngredient] = useState([
@@ -29,53 +26,52 @@ function App() {
 
   const amountIngPlus = (nameIng: string) => {
     setIngredient(prev => prev.map(ingr => {
-      if (ingr.name === nameIng) {
-        allIngrName.push(ingr.name);
-        return {
-          ...ingr,
-          count: ingr.count++
-        }
+        if (ingr.name !== nameIng) return ingr;
+        return {...ingr, count: ingr.count + 1};
       }
-
-        return ingr;
-    }))
-
+    ))
   };
 
   const amountIngDelete = (nameIng: string) => {
     setIngredient(prev => prev.map(ingr => {
-      if (ingr.name === nameIng) {
-        allIngrName.splice(1, 1);
-        return {
-          ...ingr,
-          count: 0
-        }
+        if (ingr.name !== nameIng) return ingr;
+        if (ingr.count === 0) return ingr;
+        return {...ingr, count: ingr.count - 1};
       }
-      return ingr;
-    }))
+    ))
   };
 
+  const totalPrice = INGREDIENTS.reduce((acc, cost) => {
+    ingredient.forEach(item => {
+      if (cost.name === item.name) {
+        acc += cost.price * item.count
+      }
+    })
+    return acc;
+  }, 30);
 
-
-    return (
+  return (
     <div className="App">
-      <div className="ingredients">
-        <p>Ingredients</p>
-        {ingredient.map((item, index) => {
-          let url = (INGREDIENTS.filter(t => t.name === item.name))[0].image;
-          return (
-            <Ingredient
-              key={index}
-              item={item}
-              image={url}
-              addIngr={() => amountIngPlus(item.name)}
-              deleteIngr={() => amountIngDelete(item.name)}
-            />
-          )
-        })}
-      </div>
-
-      <Burger allIngredients={allIngrName}/>
+        <div className="ingredients">
+          <h4>Ingredients</h4>
+          {ingredient.map((item, index) => {
+            let url = (INGREDIENTS.filter(pic => pic.name === item.name))[0].image;
+            return (
+              <Ingredient
+                key={index}
+                item={item}
+                image={url}
+                addIngr={() => amountIngPlus(item.name)}
+                deleteIngr={() => amountIngDelete(item.name)}
+              />
+            )
+          })}
+        </div>
+        <div className={'burPrice'}>
+          <h4>Burger</h4>
+          <Burger allIngredients={ingredient}/>
+          <TotalPrice price={totalPrice}/>
+        </div>
     </div>
   );
 }

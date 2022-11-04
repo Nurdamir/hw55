@@ -1,0 +1,20 @@
+.ingred{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nameCount {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    align-items: center;
+}
+
+.countButton {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    align-items: center;
+}

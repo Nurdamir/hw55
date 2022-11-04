@@ -1,43 +1,50 @@
 import React from 'react';
+import {IngredientsTypeC} from "../../types";
+import './Burger.css'
+import Meat from "../Ingredients/Meat/Meat";
+import Cheese from "../Ingredients/Cheese/Cheese";
+import Bacon from "../Ingredients/Bacon/Bacon";
+import Salad from "../Ingredients/Salad/Salad";
 
 interface Props {
-  allIngredients: string[];
-  // meat: String;
-  // cheese: String;
-  // salad: String;
-  // bacon: String;
+  allIngredients: IngredientsTypeC[];
 }
 
-const Burger:React.FC<Props> = (props) => {
-  let key = 0;
 
-
+const Burger: React.FC<Props> = (props) => {
+const createDivIngr = () => {
+  const arrIngred: JSX.Element[] = [];
+  props.allIngredients.forEach(oneIngr => {
+    if (oneIngr.name === 'Meat') {
+    for (let i = 0; i < oneIngr.count; i++){
+      arrIngred.push(<Meat/>);
+    }
+    } else if(oneIngr.name === 'Cheese') {
+      for(let i = 0; i < oneIngr.count; i++) {
+        arrIngred.push(<Cheese/>);
+      }
+    } else if (oneIngr.name === 'Bacon') {
+      for(let i = 0; i < oneIngr.count; i++) {
+        arrIngred.push(<Bacon/>)
+      }
+    } else if (oneIngr.name === 'Salad') {
+      for(let i = 0; i < oneIngr.count; i++) {
+        arrIngred.push(<Salad/>)
+      }
+    }
+  });
+  return arrIngred;
+}
 
   return (
-      <div className="Burger">
-        <div className="BreadTop">
-          <div className="Seeds1"></div>
-          <div className="Seeds2"></div>
-        </div>
-        {props.allIngredients.map((ingr) => {
-          if (ingr === 'Meat') {
-              key++;
-            return <div className="Meat" key={key}></div>
-          } else if (ingr === 'Cheese') {
-            key++;
-            return <div className="Cheese" key={key}></div>
-          } else if (ingr === 'Bacon') {
-            key++;
-            return <div className="Bacon" key={key}></div>
-          } else if (ingr === 'Salad') {
-            key++;
-            return <div className="Salad" key={key}></div>
-          }
-        })}
-        <div className="BreadBottom"></div>
+    <div className="Burger">
+      <div className="BreadTop">
+        <div className="Seeds1"></div>
+        <div className="Seeds2"></div>
       </div>
-      
-
+      {createDivIngr()}
+      <div className="BreadBottom"></div>
+    </div>
   );
 };
 

@@ -7,10 +7,10 @@ export interface IngredientType {
 }
 
 
-// export interface IngredientsTypeC {
-//   name: string,
-//   count: number,
-// }
+export interface IngredientsTypeC {
+  name: string,
+  count: number,
+}
 
 export interface PropsMain {
   item: IngredientsTypeC;

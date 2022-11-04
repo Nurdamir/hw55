@@ -1,9 +1,6 @@
 import React from 'react';
 import {PropsMain} from "../../types";
-
-// interface PropsIngAddDel {
-//
-// }
+import './Ingredient.css';
 
 const Ingredient: React.FC<PropsMain> = (props) => {
   return (

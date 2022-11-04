@@ -1,25 +1,23 @@
 import React from 'react';
-import {IngredientsTypeC} from "../../types";
+import {PropsMain} from "../../types";
 
-interface PropsMain {
-  item: IngredientsTypeC;
-  image: string,
-}
-
+// interface PropsIngAddDel {
+//
+// }
 
 const Ingredient: React.FC<PropsMain> = (props) => {
   return (
-    <div className="ingredients">
-      <div>
+    <div className="ingred">
+      <div onClick={props.addIngr}>
         <img src={props.image} alt={props.item.name}/>
       </div>
-
-      <h4>{props.item.name}</h4>
-
-      <b>{props.item.count}</b>
-
-      <button>delete</button>
-
+      <span className="nameCount">
+        <h4>{props.item.name}</h4>
+        <span className="countButton">
+          <b>x {props.item.count}</b>
+      <button onClick={props.deleteIngr}>Delete</button>
+        </span>
+      </span>
     </div>
   );
 };
